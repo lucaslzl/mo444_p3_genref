@@ -1,3 +1,4 @@
+import os
 import random
 
 import numpy as np
@@ -5,13 +6,14 @@ from tqdm import tqdm
 import json
 
 from search.game import Directions
-from search.pacman import loadAgent, runGames
+from search.pacman import runGames
 from search.ghostAgents import RandomGhost
 from search import layout, textDisplay
 
 from agents import SuperAgent
 
-random.seed('42')
+# random.seed(42)
+# np.random.seed(42)
 
 MOVES = [Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST]
 
@@ -157,13 +159,18 @@ def get_stats(history, scores):
     history['mini'].append(np.amin(scores))
     history['maxi'].append(np.amax(scores))
     history['mean'].append(np.mean(scores))
+    history['scores'].append(scores)
 
     return history
 
 
-def save_history(history):
+def save_history(history, maze, iteration):
 
-    with open('history.json', 'w') as fp:
+    output_dir = 'output'
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    with open(f'{output_dir}{os.sep}history_{maze}_{iteration}.json', 'w') as fp:
         json.dump(history, fp, indent=4)
 
 
@@ -176,18 +183,19 @@ def get_best(population, scores):
     return best
 
 
-def run():
+def run(maze, iteration):
 
     population = generate_population()
     history = {
         'mini': [],
         'maxi': [],
-        'mean': []
+        'mean': [],
+        'scores': []
     }
     
     for i in tqdm(range(100)):
 
-        scores = evaluate(population)
+        scores = evaluate(population, maze)
         history = get_stats(history, scores)
 
         psel = select(population, scores)
@@ -198,8 +206,15 @@ def run():
         population = prep
 
     history['best'] = get_best(population, scores)
-    save_history(history)
+    save_history(history, maze, iteration)
 
 
 if __name__ == '__main__':
-    run()
+
+    for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
+
+        for i in range(10):
+
+            print(f'#> Running: {maze} / {i}')
+        
+            run(maze, i)
