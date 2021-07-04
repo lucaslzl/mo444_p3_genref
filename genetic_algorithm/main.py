@@ -211,7 +211,8 @@ def run(maze, iteration):
 
 if __name__ == '__main__':
 
-    for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
+    # for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
+    for maze in ['originalClassic']:
 
         for i in range(10):
 
