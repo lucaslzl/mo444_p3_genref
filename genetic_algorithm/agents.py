@@ -7,7 +7,7 @@ class SuperAgent(Agent):
     def __init__(self, moves=None):
 
         self.moves = moves
-        self.iteration = 1
+        self.iteration = 0
 
 
     def getAction(self, state):

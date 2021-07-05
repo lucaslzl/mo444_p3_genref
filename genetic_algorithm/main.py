@@ -28,7 +28,8 @@ def generate_gene(size:int = 200):
     return np.random.choice(MOVES, size)
 
 
-def generate_population(size:int = 100):
+# def generate_population(size:int = 100):
+def generate_population(size:int = 10):
 
     population = []
 
@@ -106,10 +107,10 @@ def mutation(population):
 
     for i in range(qty):
         
-        # Get two random indexes
+        # Get a random index
         x = random.randrange(len(population))
 
-        # Get random genes
+        # Get random gene
         x = population[x]
 
         sel_move = np.random.choice(MOVES, 1)[0]
@@ -211,8 +212,7 @@ def run(maze, iteration):
 
 if __name__ == '__main__':
 
-    # for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
-    for maze in ['originalClassic']:
+    for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
 
         for i in range(10):
 
