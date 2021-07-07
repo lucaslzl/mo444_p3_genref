@@ -28,8 +28,7 @@ def generate_gene(size:int = 200):
     return np.random.choice(MOVES, size)
 
 
-# def generate_population(size:int = 100):
-def generate_population(size:int = 10):
+def generate_population(size:int = 100):
 
     population = []
 
@@ -165,9 +164,9 @@ def get_stats(history, scores):
     return history
 
 
-def save_history(history, maze, iteration):
+def save_history(history, maze, iteration, pop_size):
 
-    output_dir = 'output'
+    output_dir = f'output_{pop_size}'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -184,9 +183,9 @@ def get_best(population, scores):
     return best
 
 
-def run(maze, iteration):
+def run(maze, iteration, pop_size):
 
-    population = generate_population()
+    population = generate_population(pop_size)
     history = {
         'mini': [],
         'maxi': [],
@@ -207,15 +206,17 @@ def run(maze, iteration):
         population = prep
 
     history['best'] = get_best(population, scores)
-    save_history(history, maze, iteration)
+    save_history(history, maze, iteration, pop_size)
 
 
 if __name__ == '__main__':
 
-    for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
+    for pop_size in 10, 100:
 
-        for i in range(10):
+        for maze in ['smallClassic', 'mediumClassic', 'originalClassic']:
 
-            print(f'#> Running: {maze} / {i}')
-        
-            run(maze, i)
+            for i in range(10):
+
+                print(f'#> Running: {maze} / {i}')
+            
+                run(maze, i, pop_size)
