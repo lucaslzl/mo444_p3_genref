@@ -8,7 +8,7 @@ from scipy.spatial import distance
 
 class QLearningAgent(Agent):
 
-    def __init__(self, alpha=0.2, epsilon=0.5, gamma=0.8, numTraining=1000, **args):
+    def __init__(self, alpha=0.2, epsilon=0.1, gamma=0.8, numTraining=1000, **args):
         super().__init__()
         # alpha: learning rate
         self.alpha = float(alpha)
@@ -38,7 +38,7 @@ class QLearningAgent(Agent):
 
     def get_discretization(self, opt):
         if opt == 'small':
-            DISCRETE_OS_SIZE = [15, 4, 15, 4, 15, 4]
+            DISCRETE_OS_SIZE = [17, 4, 17, 4, 17, 4]
             discrete_os_win_size = np.array([17, 4, 17, 4, 17, 4]) / DISCRETE_OS_SIZE
         elif opt == 'medium':
             DISCRETE_OS_SIZE = [12, 6, 12, 6, 12, 6]
